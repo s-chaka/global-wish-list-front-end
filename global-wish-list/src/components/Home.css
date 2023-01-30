@@ -1,0 +1,33 @@
+.search-page {
+    /* min-width: 50%; */
+    width: 85%;
+    height: 60vh;
+    border:solid black;
+    margin: 0vw;
+    padding: 5vw;
+    margin-left: auto;
+    margin-right: auto;
+    /* position: relative; */
+    align-items: center;
+}
+
+
+.search_h2 {
+    align-items: center;
+    width: auto;
+    display: block;
+    align-items: center;
+}
+
+.searchBar {
+    padding: 10px;
+    font-size: 20px;
+    align-items: center;
+    margin: 0 auto;
+    display: block;
+}
+.h2 {
+    align-items: center;
+    color: orange;
+    text-align: center;
+}
