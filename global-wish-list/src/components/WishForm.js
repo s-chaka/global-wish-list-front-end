@@ -17,13 +17,14 @@ const WishForm = (props) => {
 
   // console.log(userData.id);
   const FormSubmit = (e) => {
+    console.log(props.data);
     e.preventDefault();
     props.onAddWishData(
       {
         wish: formFields.wishList,
         story: formFields.story,
       },
-      props.userData._id
+      props.data[0].id // find a way to get the current user
     );
     setFormFields({
       wishList: "",

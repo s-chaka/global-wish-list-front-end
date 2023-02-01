@@ -19,7 +19,6 @@ const router = createBrowserRouter(routes);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <BrowserRouter> */}
     <Auth0Provider
       domain={domain}
       clientId={clientId}
@@ -28,7 +27,6 @@ root.render(
       <RouterProvider router={router} />
       {/* <App /> */}
     </Auth0Provider>
-    {/* </BrowserRouter> */}
   </React.StrictMode>
 );
 

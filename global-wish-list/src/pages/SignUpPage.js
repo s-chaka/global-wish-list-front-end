@@ -1,7 +1,8 @@
 import { useOutletContext } from "react-router-dom";
 import SignUpForm from "../components/SignUpForm";
 import WishForm from "../components/WishForm";
-const SignUp = () => {
+
+const SignUpPage = () => {
   const { addUser, addWish, userData } = useOutletContext();
   return (
     <div>
@@ -11,4 +12,4 @@ const SignUp = () => {
     </div>
   );
 };
-export default SignUp;
+export default SignUpPage;
