@@ -7,8 +7,6 @@ const SignUpPage = () => {
   return (
     <div>
       <SignUpForm onAddUserData={addUser} />
-      <br />
-      <WishForm onAddWishData={addWish} data={userData} />
     </div>
   );
 };

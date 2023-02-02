@@ -4,12 +4,17 @@ import Profile from "../components/Profile";
 import SignInForm from "../components/SingInForm";
 
 const SignIn = () => {
-  const { userData, logIn, logOut } = useOutletContext();
+  const { userData, logIn, logOut, setCurrentUser } = useOutletContext();
   return (
     <div>
       {/* <LogIn /> */}
       {/* <Profile /> */}
-      <SignInForm data={userData} onLogIn={logIn} onLogOut={logOut} />
+      <SignInForm
+        data={userData}
+        onLogIn={logIn}
+        onLogOut={logOut}
+        onSetCurrentUser={setCurrentUser}
+      />
     </div>
   );
 };

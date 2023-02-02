@@ -21,18 +21,20 @@ import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 // import { AuthProvider } from "./hooks/useAuth";
 
+// const URL=https://global-wish-list.herokuapp.com/users
 const URL = "http://localhost:5000/users";
 
 const MainLayout = () => {
   const [userData, setUserData] = useState([]);
   const [wishData, setWishData] = useState([]);
-  // const [token, setToken] = useState();
+  const [currentUser, setCurrentUser] = useState("");
+
   // get user working
   useEffect(() => {
     axios
       .get(URL)
       .then((response) => {
-        console.log("test response", response);
+        console.log("user test response", response);
         const newUsers = response.data.result.map((user) => {
           return {
             id: user._id,
@@ -55,7 +57,7 @@ const MainLayout = () => {
     axios
       .post(URL, user)
       .then((response) => {
-        console.log("test response", response);
+        console.log(" add user test response", response);
         const newUsers = [...userData];
         newUsers.push({
           firstName: "",
@@ -109,13 +111,14 @@ const MainLayout = () => {
       .get(`${URL}/wishes`)
       // .get(`${URL}/${user_id}/wishlist`)
       .then((response) => {
-        console.log("test wish respones", response);
+        console.log(" wish test respones", response);
         const newWishes = response.data.result.map((userWish) => {
           return {
             // id: userWish.id,
             wishList: userWish.wish,
             story: userWish.story,
             owner: userWish.owner_id,
+            id: userWish._id,
           };
         });
         setWishData(newWishes);
@@ -143,7 +146,7 @@ const MainLayout = () => {
         console.log(error);
       });
   };
-
+  console.log("current user from router", currentUser);
   // this is not in NavBar
   // if (!token) {
   //   return <SignIn setToken={setToken} />;
@@ -152,7 +155,16 @@ const MainLayout = () => {
   return (
     // <AuthProvider>
     <Layout>
-      <Outlet context={{ addUser, addWish, userData, wishData }} />
+      <Outlet
+        context={{
+          addUser,
+          addWish,
+          userData,
+          wishData,
+          setCurrentUser,
+          currentUser,
+        }}
+      />
     </Layout>
     // </AuthProvider>
   );

@@ -12,7 +12,7 @@ const WishList = () => {
     axios
       .get(`${URL}/wishes`)
       .then((response) => {
-        console.log("test wish respones", response);
+        // console.log("test wish respones", response);
         const newWishes = response.data.result.map((userWish) => {
           return {
             id: userWish._id,

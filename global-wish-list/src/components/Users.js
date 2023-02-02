@@ -1,12 +1,20 @@
-// const Users = (props) => {
-//   const userData = props.data;
-//   return (
-//     <div>
-//       {userData.map((user) => (
-//         <li>{user.firstName}</li>
-//       ))}
-//     </div>
-//   );
-// };
+import Dashboard from "./Dashboard";
 
-// export default Users;
+const Users = (props) => {
+  const currentUser = props.currentUser;
+  console.log("current user from dashboard", currentUser);
+  return (
+    <div>
+      {currentUser.map((user) => (
+        <Dashboard
+          firstName={user.firstName}
+          lastName={user.lastName}
+          email={user.email}
+          address={user.address}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default Users;

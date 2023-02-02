@@ -1,6 +1,7 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Router } from "react-router-dom";
 import { useState } from "react";
 import PropTypes from "prop-types";
+import WishForm from "./WishForm";
 // import { setItemInLocalStorge } from "../Utils";
 // import { useAuth } from "../hooks/useAuth";
 // import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
@@ -8,19 +9,23 @@ import PropTypes from "prop-types";
 const SignInForm = (props) => {
   const navigate = useNavigate();
 
-  const handleClick = (e) => {
+  // const [currentUser, setCurrentUser] = useState("");
+
+  const handleUser = (e) => {
     // console.log(e);
-    // console.log("me", props.data[0]);
+    // console.log("me", props.data);
     // setItemInLocalStorge("user", props.data[0]);
     // navigate("/dashboard");m
     let user_found = false;
     for (let user of props.data) {
-      // console.log(user.email);
+      // console.log("user id", user.id);
       if (
         user.email === formFields.email &&
         user.password === formFields.password
       ) {
         user_found = true;
+        props.onSetCurrentUser(user);
+        // setCurrentUser(user.id);
         navigate("/dashboard");
         break;
       }
@@ -37,7 +42,7 @@ const SignInForm = (props) => {
 
   const FormSubmit = (e) => {
     e.preventDefault();
-    handleClick({
+    handleUser({
       email: formFields.email,
       password: formFields.password,
     });
@@ -68,7 +73,7 @@ const SignInForm = (props) => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit" onClick={handleClick}>
+        <button type="submit" onClick={handleUser}>
           {" "}
           Log in{" "}
         </button>
