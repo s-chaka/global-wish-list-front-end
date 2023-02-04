@@ -58,7 +58,7 @@ const WishForm = (props) => {
     <form onSubmit={FormSubmit}>
       <div>
         <br />
-        <label htmlFor="wishList">Wish List: </label>
+        <label htmlFor="wishList">Wish: </label>
         <input
           name="wishList"
           value={formFields.wishList}
@@ -75,7 +75,7 @@ const WishForm = (props) => {
         <input name="email" value={formFields.email} onChange={handleChange} />
       </div> */}
       <br />
-      <button type="submit"> Add Wish </button>
+      <button type="submit"> Sumbit Wish </button>
     </form>
   );
 };

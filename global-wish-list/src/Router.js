@@ -19,7 +19,7 @@ import Dashboard from "./components/Dashboard";
 import Profile from "./components/Profile";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
-// import { AuthProvider } from "./hooks/useAuth";
+import { AuthProvider } from "./hooks/useAuth";
 
 // const URL=https://global-wish-list.herokuapp.com/users
 const URL = "http://localhost:5000/users";
@@ -80,7 +80,7 @@ const MainLayout = () => {
       });
   };
   // const [user, setUser] = useState(null);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const location = useLocation();
   // const logIn = () => {
   //   // setItemInLocalStorge("user", userData[0]);
@@ -90,28 +90,30 @@ const MainLayout = () => {
   // const logOut = () => {
   //   setUser(null);
   //   // setItemInLocalStorge("user", null);
-  //   navigate("/home");
+  //   navigate("/");
   // };
-  // not checked yet
+  // working
   const deleteUser = (id) => {
+    // const result = window.confirm('Account deleted successfully')
     axios
       .delete(`${URL}/${id}`)
       .then(() => {
-        const newUsers = userData.filter((user) => user.id !== id);
+        const newUsers = userData?.filter((user) => user?.id !== id);
         setUserData(newUsers);
       })
       .catch((error) => {
         console.log(error);
       });
+    navigate("/");
   };
 
-  // getUsersWish = () => {
+  // get all Users
   useEffect(() => {
     axios
       .get(`${URL}/wishes`)
       // .get(`${URL}/${user_id}/wishlist`)
       .then((response) => {
-        console.log(" wish test respones", response);
+        // console.log(" wish test respones", response);
         const newWishes = response.data.result.map((userWish) => {
           return {
             // id: userWish.id,
@@ -128,7 +130,7 @@ const MainLayout = () => {
       });
   }, []);
 
-  // working on this ??????????? find a way to get the current userId
+  // working
   const addWish = (wish, userId) => {
     axios
       .post(`${URL}/${userId}/wishlist`, wish)
@@ -138,7 +140,6 @@ const MainLayout = () => {
         newWish.push({
           wishList: "",
           story: "",
-          // ...userId,
         });
         setUserData(newWish);
       })
@@ -146,27 +147,48 @@ const MainLayout = () => {
         console.log(error);
       });
   };
-  console.log("current user from router", currentUser);
-  // this is not in NavBar
-  // if (!token) {
-  //   return <SignIn setToken={setToken} />;
-  // }
+  const deleteWish = (wishId) => {
+    axios
+      .delete(`${URL}/${wishId}/wishlist`)
+      .then(() => {
+        const newWishes = wishData.filter((wish) => wish.id !== wishId);
+        setWishData(newWishes);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  // const updateWish = (wishId) => {
+  //   axios
+  //     .put(`${URL}/${wishId}/wishlist`)
+  //     .then(() => {
+  //       const newWishes = wishData((wish) => wish.id === wishId);
+  //       setWishData(newWishes);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+  // const logedInMyUser = window.localStorage.getItem("myuser");
+  // console.log(logedInMyUser, "login");
 
   return (
-    // <AuthProvider>
-    <Layout>
-      <Outlet
-        context={{
-          addUser,
-          addWish,
-          userData,
-          wishData,
-          setCurrentUser,
-          currentUser,
-        }}
-      />
-    </Layout>
-    // </AuthProvider>
+    <AuthProvider>
+      <Layout>
+        <Outlet
+          context={{
+            addUser,
+            addWish,
+            userData,
+            wishData,
+            setCurrentUser,
+            currentUser,
+            deleteWish,
+            deleteUser,
+          }}
+        />
+      </Layout>
+    </AuthProvider>
   );
 };
 

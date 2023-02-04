@@ -9,24 +9,24 @@ import {
   BrowserRouter,
 } from "react-router-dom";
 import { routes } from "./Router";
-import { Auth0Provider } from "@auth0/auth0-react";
+// import { Auth0Provider } from "@auth0/auth0-react";
 
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_CLIENT_ID;
+// const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+// const clientId = process.env.REACT_APP_CLIENT_ID;
 
 const router = createBrowserRouter(routes);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Auth0Provider
+    {/* <Auth0Provider
       domain={domain}
       clientId={clientId}
       redirectUri={window.location.origin}
-    >
-      <RouterProvider router={router} />
-      {/* <App /> */}
-    </Auth0Provider>
+    > */}
+    <RouterProvider router={router} />
+    {/* <App /> */}
+    {/* </Auth0Provider> */}
   </React.StrictMode>
 );
 

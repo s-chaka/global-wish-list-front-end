@@ -9,17 +9,23 @@ import {
 import HomePage from "../pages/HomePage";
 import SignUp from "../pages/SignUpPage";
 import Wishes from "../pages/Wishes";
-// import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
+import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
+import { useAuth } from "../hooks/useAuth";
 
 const NavBar = () => {
-  const handleClick = () => {
-    // setItemInLocalStorge("user", null);
-  };
-  // const user = getItemFromLocalStorage("");
-  // console.log("user", user);
+  const navigate = useNavigate();
+  const { logout, user } = useAuth();
+  // const handleClick = () => {
+
+  //   setItemInLocalStorage("user", null);
+  //   console.log("user");
+  //   navigate("/");
+  //   window.localStorage.removeItem("myuser");
+  // };
+  // const user = getItemFromLocalStorage("user");
+  // console.log("user");
   return (
     <div className="navbar">
-      {/* <h2 className="h2">Global Wish List </h2> */}
       <Link to="/" className="link">
         Home{" "}
       </Link>
@@ -32,7 +38,8 @@ const NavBar = () => {
       <Link to="/signin" className="link">
         Signin{" "}
       </Link>
-      {/* <button> Log Out</button> */}
+      {/* {user && <button onClick={handleClick}> Log Out</button>} */}
+      {user && <button onClick={logout}> Log Out</button>}
     </div>
   );
 };

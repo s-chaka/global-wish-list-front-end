@@ -28,7 +28,7 @@ const WishList = () => {
       });
   }, []);
 
-  // working on this
+  // working
   const [userWish, setUserWish] = "";
   const getUsersWish = (user_id) => {
     axios

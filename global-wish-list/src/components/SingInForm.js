@@ -3,17 +3,19 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import WishForm from "./WishForm";
 // import { setItemInLocalStorge } from "../Utils";
-// import { useAuth } from "../hooks/useAuth";
-// import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
+import { useAuth } from "../hooks/useAuth";
+import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
 
 const SignInForm = (props) => {
   const navigate = useNavigate();
 
+  // const value = useAuth();
+  // console.log("value", value);
+  const { login, user } = useAuth();
+  // console.log("log in from value", login);
   // const [currentUser, setCurrentUser] = useState("");
 
   const handleUser = (e) => {
-    // console.log(e);
-    // console.log("me", props.data);
     // setItemInLocalStorge("user", props.data[0]);
     // navigate("/dashboard");m
     let user_found = false;
@@ -25,7 +27,9 @@ const SignInForm = (props) => {
       ) {
         user_found = true;
         props.onSetCurrentUser(user);
-        // setCurrentUser(user.id);
+        // setItemInLocalStorage("user", props.currentUser);
+        setItemInLocalStorage("user", user);
+        login();
         navigate("/dashboard");
         break;
       }

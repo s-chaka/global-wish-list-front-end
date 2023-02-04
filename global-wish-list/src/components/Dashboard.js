@@ -18,7 +18,10 @@ const Dashboard = (props) => {
   }
   return (
     <div>
-      <p className="userName"> Hello {currentUser.firstName}</p>
+      <button onClick={() => props.OnDeleteUser?.(currentUser.id)}>
+        Delete My Account
+      </button>
+      <p className="userName"> Hello {currentUser.firstName} 👋🏼</p>
       <div className="dashboardProfile">
         <p>First Name: {currentUser.firstName}</p>
         <p>Last Name: {currentUser.lastName}</p>
@@ -35,7 +38,12 @@ const Dashboard = (props) => {
       {wishList.map((wish) => {
         return (
           <ul key={wish.id}>
-            <li>Wish: {wish.wishList}</li>
+            <li>
+              Wish: {wish.wishList}{" "}
+              <button onClick={() => props.OnDeleteWish(wish.id)}>
+                Remove Wish
+              </button>
+            </li>
             <li>Story: {wish.story}</li>
           </ul>
         );
