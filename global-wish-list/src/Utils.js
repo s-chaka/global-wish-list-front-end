@@ -1,5 +1,5 @@
-export const capitalizeword = ([firstLetter, ...rest]) =>
-  [firstLetter.toUpperCase(), ...rest].join("");
+// export const capitalizeword = ([firstLetter, ...rest]) =>
+//   [firstLetter.toUpperCase(), ...rest].join("");
 
 export const setItemInLocalStorage = (keyName, value) => {
   console.log("keyName:", keyName);

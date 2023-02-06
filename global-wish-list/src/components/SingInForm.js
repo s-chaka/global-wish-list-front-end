@@ -1,48 +1,39 @@
 import { useNavigate, useLocation, Router } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContex } from "react";
 import PropTypes from "prop-types";
 import WishForm from "./WishForm";
 // import { setItemInLocalStorge } from "../Utils";
 import { useAuth } from "../hooks/useAuth";
+import { useOutletContext } from "react-router-dom";
 import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
 
 const SignInForm = (props) => {
   const navigate = useNavigate();
-
-  // const value = useAuth();
-  // console.log("value", value);
-  const { login, user } = useAuth();
-  // console.log("log in from value", login);
-  // const [currentUser, setCurrentUser] = useState("");
-
+  const { userData, setCurrentUser } = useOutletContext();
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+  });
+  // const { login, user } = useAuth();
   const handleUser = (e) => {
-    // setItemInLocalStorge("user", props.data[0]);
-    // navigate("/dashboard");m
     let user_found = false;
-    for (let user of props.data) {
-      // console.log("user id", user.id);
+    for (let user of userData) {
       if (
         user.email === formFields.email &&
         user.password === formFields.password
       ) {
         user_found = true;
-        props.onSetCurrentUser(user);
-        // setItemInLocalStorage("user", props.currentUser);
+        setCurrentUser(user);
         setItemInLocalStorage("user", user);
-        login();
         navigate("/dashboard");
         break;
       }
+      // login();
     }
     if (!user_found) {
       navigate("/signup");
     }
   };
-
-  const [formFields, setFormFields] = useState({
-    email: "",
-    password: "",
-  });
 
   const FormSubmit = (e) => {
     e.preventDefault();
@@ -79,7 +70,7 @@ const SignInForm = (props) => {
         </div>
         <button type="submit" onClick={handleUser}>
           {" "}
-          Log in{" "}
+          Sign In/Sign Up{" "}
         </button>
       </form>
     </div>

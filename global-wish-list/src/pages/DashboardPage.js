@@ -10,7 +10,7 @@ const DashboardPage = () => {
   const [showForm, setShowForm] = useState(false);
   return (
     <div>
-      <h2 className="h2">Dashboard </h2>
+      {/* <h2 className="h2">Dashboard </h2> */}
       <Dashboard
         data={userData}
         currentUser={currentUser}

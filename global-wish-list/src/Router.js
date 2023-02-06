@@ -20,6 +20,9 @@ import Profile from "./components/Profile";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import { AuthProvider } from "./hooks/useAuth";
+import { getItemFromLocalStorage, setItemInLocalStorage } from "./Utils";
+import HowItWorksPage from "./pages/HowItWorksPage";
+import UsersList from "./components/UsersList";
 
 // const URL=https://global-wish-list.herokuapp.com/users
 const URL = "http://localhost:5000/users";
@@ -27,14 +30,20 @@ const URL = "http://localhost:5000/users";
 const MainLayout = () => {
   const [userData, setUserData] = useState([]);
   const [wishData, setWishData] = useState([]);
-  const [currentUser, setCurrentUser] = useState("");
+  const [currentUser, setCurrentUser] = useState(
+    getItemFromLocalStorage("user")
+  );
+  const [searchResults, setSearchResults] = useState([]);
+  // const [searchInput, setSearchInput] = useState("");
+
+  // console.log(searchResults);
 
   // get user working
   useEffect(() => {
     axios
       .get(URL)
       .then((response) => {
-        console.log("user test response", response);
+        // console.log("user test response", response);
         const newUsers = response.data.result.map((user) => {
           return {
             id: user._id,
@@ -46,6 +55,7 @@ const MainLayout = () => {
           };
         });
         setUserData(newUsers);
+        setSearchResults(newUsers);
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +67,7 @@ const MainLayout = () => {
     axios
       .post(URL, user)
       .then((response) => {
-        console.log(" add user test response", response);
+        // console.log(" add user test response", response);
         const newUsers = [...userData];
         newUsers.push({
           firstName: "",
@@ -79,19 +89,8 @@ const MainLayout = () => {
         console.log(error);
       });
   };
-  // const [user, setUser] = useState(null);
+
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const logIn = () => {
-  //   // setItemInLocalStorge("user", userData[0]);
-  //   setUser(userData[0]);
-  //   navigate("/dashboard");
-  // };
-  // const logOut = () => {
-  //   setUser(null);
-  //   // setItemInLocalStorge("user", null);
-  //   navigate("/");
-  // };
   // working
   const deleteUser = (id) => {
     // const result = window.confirm('Account deleted successfully')
@@ -171,10 +170,11 @@ const MainLayout = () => {
   // };
   // const logedInMyUser = window.localStorage.getItem("myuser");
   // console.log(logedInMyUser, "login");
+  // console.log(userData);
 
   return (
-    <AuthProvider>
-      <Layout>
+    <AuthProvider setCurrentUser={setCurrentUser}>
+      <Layout currentUser={currentUser}>
         <Outlet
           context={{
             addUser,
@@ -185,6 +185,8 @@ const MainLayout = () => {
             currentUser,
             deleteWish,
             deleteUser,
+            setSearchResults,
+            searchResults,
           }}
         />
       </Layout>
@@ -199,6 +201,10 @@ export const routes = [
       {
         element: <Homepage />,
         path: "/",
+      },
+      {
+        element: <HowItWorksPage />,
+        path: "/howitworks",
       },
       {
         element: <SignUpPage />,

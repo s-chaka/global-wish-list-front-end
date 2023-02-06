@@ -1,45 +1,37 @@
 import "./NavBar.css";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  useNavigate,
-} from "react-router-dom";
-import HomePage from "../pages/HomePage";
-import SignUp from "../pages/SignUpPage";
-import Wishes from "../pages/Wishes";
-import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
+import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
-const NavBar = () => {
-  const navigate = useNavigate();
-  const { logout, user } = useAuth();
-  // const handleClick = () => {
+const NavBar = ({ currentUser }) => {
+  const { logout, login, handleUser } = useAuth();
 
-  //   setItemInLocalStorage("user", null);
-  //   console.log("user");
-  //   navigate("/");
-  //   window.localStorage.removeItem("myuser");
-  // };
-  // const user = getItemFromLocalStorage("user");
-  // console.log("user");
+  // console.log(currentUser);
   return (
     <div className="navbar">
       <Link to="/" className="link">
         Home{" "}
       </Link>
+      <Link to="/howitworks" className="link">
+        How It Works{" "}
+      </Link>
       <Link to="/wishes" className="link">
         Wish List{" "}
       </Link>
-      <Link to="/signup" className="link">
-        Signup{" "}
-      </Link>
-      <Link to="/signin" className="link">
-        Signin{" "}
-      </Link>
-      {/* {user && <button onClick={handleClick}> Log Out</button>} */}
-      {user && <button onClick={logout}> Log Out</button>}
+      {!currentUser && (
+        <Link to="/signin" className="link" onClick={logout}>
+          Sign In/ Sign Up{" "}
+        </Link>
+      )}
+      {currentUser && (
+        <Link to="/dashboard" className="link" onClick={handleUser}>
+          {currentUser.firstName}'s Dashoard{" "}
+        </Link>
+      )}
+      {currentUser && (
+        <Link to="/" className="link" onClick={logout}>
+          Sign Out{" "}
+        </Link>
+      )}
     </div>
   );
 };

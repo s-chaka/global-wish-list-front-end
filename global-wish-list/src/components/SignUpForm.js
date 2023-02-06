@@ -1,10 +1,11 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import set from "lodash/set";
 import "./Form.css";
+import { useOutletContext } from "react-router-dom";
 
-const SignUpForm = (props) => {
-  // console.log(props.onAddUserData);
+const SignUpForm = () => {
+  const { userData, addUser } = useOutletContext();
+  const [error, setError] = useState(false);
   const [formFields, setFormFields] = useState({
     firstName: "",
     lastName: "",
@@ -20,7 +21,15 @@ const SignUpForm = (props) => {
   });
   const FormSubmit = (e) => {
     e.preventDefault();
-    props.onAddUserData({
+    // if (
+    //   formFields.firstName.length === 0 ||
+    //   formFields.lastName.length === 0 ||
+    //   formFields.email.length === 0 ||
+    //   formFields.address.country.length === 0
+    // ) {
+    //   setError(true);
+    // }
+    addUser({
       first_name: formFields.firstName,
       last_name: formFields.lastName,
       email: formFields.email,
@@ -49,6 +58,12 @@ const SignUpForm = (props) => {
   };
   return (
     <div className="form-container">
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <h3> Please Sign Up </h3>
       <form onSubmit={FormSubmit} className="signup-form">
         <div>
@@ -60,6 +75,11 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.firstName <= 0 ? (
+          <label className="error-lable">*First Name can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>
           <label htmlFor="lastName">Last Name: </label>
           <input
@@ -69,6 +89,11 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.lastName <= 0 ? (
+          <label className="error-lable">*Last Name can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>
           <label htmlFor="email">Email: </label>
           <input
@@ -78,6 +103,11 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.email <= 0 ? (
+          <label className="error-lable"> *Email can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>
           <label htmlFor="password">Password: </label>
           <input
@@ -87,7 +117,13 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.password <= 0 ? (
+          <label className="error-lable"> *Password can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>Address </div>
+
         <div>
           <label htmlFor="country">Country: </label>
           <input
@@ -97,6 +133,11 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.country <= 0 ? (
+          <label className="error-lable"> *Country can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>
           <label htmlFor="city">City: </label>
           <input
@@ -106,6 +147,11 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.city <= 0 ? (
+          <label className="error-lable">*City can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>
           <label htmlFor="state">State: </label>
           <input
@@ -115,6 +161,11 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.state <= 0 ? (
+          <label className="error-lable"> *State can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>
           <label htmlFor="streetAddress">Stree address: </label>
           <input
@@ -124,6 +175,11 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
+        {error && formFields.streetAddress <= 0 ? (
+          <label className="error-lable"> *Street Address can't be empty</label>
+        ) : (
+          ""
+        )}
         <div>
           <label htmlFor="zipCode">Zip code: </label>
           <input
@@ -133,7 +189,14 @@ const SignUpForm = (props) => {
             onChange={handleChange}
           />
         </div>
-        <button type="submit">Sign Up </button>
+        {error && formFields.zipCode <= 0 ? (
+          <label className="error-lable"> *Zip code can't be empty</label>
+        ) : (
+          ""
+        )}
+        <div>
+          <button type="submit">Sign Up </button>
+        </div>
       </form>
     </div>
   );
