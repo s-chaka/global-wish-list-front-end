@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 
 const NavBar = ({ currentUser }) => {
-  const { logout, login, handleUser } = useAuth();
-
-  // console.log(currentUser);
+  const { logout, login, handleUser, deleteUser } = useAuth();
   return (
     <div className="navbar">
       <Link to="/" className="link">

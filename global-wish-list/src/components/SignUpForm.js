@@ -1,9 +1,10 @@
 import { useState } from "react";
 import set from "lodash/set";
 import "./Form.css";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 
 const SignUpForm = () => {
+  const navigate = useNavigate();
   const { userData, addUser } = useOutletContext();
   const [error, setError] = useState(false);
   const [formFields, setFormFields] = useState({
@@ -49,8 +50,13 @@ const SignUpForm = () => {
         zipCode: "",
       },
     });
+    // alert("user deleted successfully");
+    navigate("/signin");
   };
 
+  const alertMessage = () => {
+    alert("User created successfully please sign in!");
+  };
   const handleChange = (e) => {
     const formFieldsCopy = JSON.parse(JSON.stringify(formFields));
     set(formFieldsCopy, e.target.name, e.target.value);
@@ -195,7 +201,9 @@ const SignUpForm = () => {
           ""
         )}
         <div>
-          <button type="submit">Sign Up </button>
+          <button type="submit" onClick={alertMessage}>
+            Sign Up{" "}
+          </button>
         </div>
       </form>
     </div>

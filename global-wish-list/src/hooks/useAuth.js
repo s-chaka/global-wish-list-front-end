@@ -17,14 +17,8 @@ export const AuthProvider = ({ children, setCurrentUser, currentUser }) => {
     } else if (!currentUser) {
       navigate("/");
     }
-    // console.log(lsUser);
   }, []);
-  // const login = (lsUser) => {
-  //   setItemInLocalStorage("user", currentUser);
-  //   // setUser(currentUser);
-  //   console.log("current user form useAuth", currentUser);
-  //   navigate("/dashboard");
-  // };
+
   const logout = () => {
     setCurrentUser(null);
     setItemInLocalStorage("user", null);

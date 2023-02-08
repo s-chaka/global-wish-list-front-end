@@ -1,9 +1,9 @@
 import NavBar from "./NavBar";
 
-const Layout = ({ children, currentUser }) => {
+const Layout = ({ children, currentUser, logout }) => {
   return (
     <div>
-      <NavBar currentUser={currentUser} />
+      <NavBar currentUser={currentUser} logout={logout} />
       {children}
     </div>
   );

@@ -3,8 +3,25 @@ import "./Dashboard.css";
 import { useOutletContext } from "react-router-dom";
 
 const Dashboard = () => {
-  const { wishData, currentUser, deleteUser, deleteWish, user } =
-    useOutletContext();
+  const {
+    wishData,
+    currentUser,
+    deleteUser,
+    deleteWish,
+    satisfyWish,
+    pickGreenHeart,
+    pickYellowHeart,
+    updateWish,
+    logout,
+  } = useOutletContext();
+  // };
+  // const pickGreenHeart = (satisfied) => {
+  //   if (satisfied) {
+  //     return "💚";
+  //   } else {
+  //     return "🤍";
+  //   }
+  // };
   const wishList = [];
   for (let wish of wishData) {
     if (currentUser.id === wish.owner) {
@@ -13,9 +30,21 @@ const Dashboard = () => {
     }
     // console.log("current user wish", wishList);
   }
+  const alertUserMessages = () => {
+    alert("User will be deleted!");
+  };
+  const alertWishMessage = () => {
+    alert("Wish will be deleted!");
+  };
   return (
     <div>
-      <button onClick={() => deleteUser?.(currentUser.id)}>
+      <button
+        onClick={() => {
+          deleteUser?.(currentUser.id);
+          alertUserMessages();
+          // logout();
+        }}
+      >
         Delete My Account
       </button>
       <p className="userName"> Hello {currentUser.firstName} 👋🏼</p>
@@ -31,20 +60,41 @@ const Dashboard = () => {
         <p> Zip Code: {currentUser.address?.zipCode}</p>
         <p></p>
       </article>
-      <article>
+      <div className="wishes-article">
         <p>My Wish List </p>
         {wishList.map((wish) => {
           return (
             <ul key={wish.id}>
               <li>
-                Wish: {wish.wishList}{" "}
-                <button onClick={() => deleteWish(wish.id)}>Remove Wish</button>
+                Wish: {wish.wishList}
+                {pickGreenHeart(wish.satisfied)}
+                <button
+                  onClick={() => {
+                    satisfyWish(wish.id);
+                    updateWish(wish.id, {
+                      ...wish,
+                      satisfied: !wish.satisfied,
+                    });
+                  }}
+                >
+                  Satisfied{" "}
+                </button>
+                {pickYellowHeart(wish.interested)}
+                <button
+                  onClick={() => {
+                    deleteWish?.(wish.id);
+                    alertWishMessage();
+                  }}
+                >
+                  {" "}
+                  Remove Wish{" "}
+                </button>
               </li>
               <li>Story: {wish.story}</li>
             </ul>
           );
         })}
-      </article>
+      </div>
     </div>
   );
 };

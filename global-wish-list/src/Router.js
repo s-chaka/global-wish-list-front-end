@@ -1,13 +1,5 @@
-import {
-  Navigate,
-  Outlet,
-  BrowserRouter,
-  Route,
-  Switch,
-} from "react-router-dom";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Router } from "react-router-dom";
 import axios from "axios";
 import Homepage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
@@ -15,14 +7,11 @@ import UnknownPage from "./pages/404";
 import Wishes from "./pages/Wishes";
 import SignInPage from "./pages/SingInPage";
 import Layout from "./components/Layout";
-import Dashboard from "./components/Dashboard";
-import Profile from "./components/Profile";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import { AuthProvider } from "./hooks/useAuth";
 import { getItemFromLocalStorage, setItemInLocalStorage } from "./Utils";
 import HowItWorksPage from "./pages/HowItWorksPage";
-import UsersList from "./components/UsersList";
 
 // const URL=https://global-wish-list.herokuapp.com/users
 const URL = "http://localhost:5000/users";
@@ -33,17 +22,13 @@ const MainLayout = () => {
   const [currentUser, setCurrentUser] = useState(
     getItemFromLocalStorage("user")
   );
-  const [searchResults, setSearchResults] = useState([]);
-  // const [searchInput, setSearchInput] = useState("");
-
-  // console.log(searchResults);
 
   // get user working
   useEffect(() => {
     axios
       .get(URL)
       .then((response) => {
-        // console.log("user test response", response);
+        console.log("get user response", response);
         const newUsers = response.data.result.map((user) => {
           return {
             id: user._id,
@@ -93,7 +78,6 @@ const MainLayout = () => {
   const navigate = useNavigate();
   // working
   const deleteUser = (id) => {
-    // const result = window.confirm('Account deleted successfully')
     axios
       .delete(`${URL}/${id}`)
       .then(() => {
@@ -115,11 +99,12 @@ const MainLayout = () => {
         // console.log(" wish test respones", response);
         const newWishes = response.data.result.map((userWish) => {
           return {
-            // id: userWish.id,
             wishList: userWish.wish,
             story: userWish.story,
             owner: userWish.owner_id,
             id: userWish._id,
+            interested: userWish.interested,
+            satisfied: userWish.satisfied,
           };
         });
         setWishData(newWishes);
@@ -134,7 +119,7 @@ const MainLayout = () => {
     axios
       .post(`${URL}/${userId}/wishlist`, wish)
       .then((response) => {
-        console.log("test response", response);
+        // console.log("test response", response);
         const newWish = [...wishData];
         newWish.push({
           wishList: "",
@@ -146,6 +131,7 @@ const MainLayout = () => {
         console.log(error);
       });
   };
+  // working
   const deleteWish = (wishId) => {
     axios
       .delete(`${URL}/${wishId}/wishlist`)
@@ -157,20 +143,125 @@ const MainLayout = () => {
         console.log(error);
       });
   };
-  // const updateWish = (wishId) => {
-  //   axios
-  //     .put(`${URL}/${wishId}/wishlist`)
-  //     .then(() => {
-  //       const newWishes = wishData((wish) => wish.id === wishId);
-  //       setWishData(newWishes);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-  // const logedInMyUser = window.localStorage.getItem("myuser");
-  // console.log(logedInMyUser, "login");
-  // console.log(userData);
+
+  const updateWish = (wishId, wish) => {
+    axios
+      .put(`${URL}/${wishId}/wishlist`, {
+        wish: wish.wishList,
+        story: wish.story,
+        interested: wish.interested,
+        satisfied: wish.satisfied,
+      })
+      .then(() => {
+        const updateUserWish = (updatedWish) => {
+          const updatedWishes = wishData.map((wish) => {
+            if (wish.id === updatedWish.id) {
+              return updatedWish;
+            } else {
+              return wish;
+            }
+          });
+          setWishData(updatedWishes);
+        };
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const [searchResults, setSearchResults] = useState([]);
+  const [foundUser, setFoundUser] = useState([]);
+  const [foundUserWish, setFoundUserWish] = useState([]);
+  const handleSearchResult = () => {
+    const wishFound = [];
+    const userFound = [];
+    for (let wish of wishData) {
+      for (let result of searchResults) {
+        if (result.id === wish.owner) {
+          wishFound.push(wish);
+          if (!userFound.includes(result)) userFound.push(result);
+          continue;
+        }
+        setFoundUserWish(wishFound);
+        setFoundUser(userFound);
+      }
+      // if (!wishFound) {
+      //   <p>"No wish found"</p>;
+      // } else {
+      navigate("/profile");
+      // }
+    }
+  };
+
+  const makeWishReal = (wish_id) => {
+    setWishData((interestes) => {
+      return interestes.map((interest) => {
+        if (interest.id === wish_id) {
+          return {
+            ...interest,
+            interested: !interest.interested,
+          };
+        } else {
+          return interest;
+        }
+      });
+    });
+
+    setFoundUserWish((interestes) => {
+      return interestes.map((interest) => {
+        if (interest.id === wish_id) {
+          return {
+            ...interest,
+            interested: !interest.interested,
+          };
+        } else {
+          return interest;
+        }
+      });
+    });
+  };
+
+  const satisfyWish = (wish_id) => {
+    setWishData((satisfies) => {
+      return satisfies.map((satisfy) => {
+        if (satisfy.id === wish_id) {
+          return {
+            ...satisfy,
+            satisfied: !satisfy.satisfied,
+          };
+        } else {
+          return satisfy;
+        }
+      });
+    });
+
+    setFoundUserWish((satisfies) => {
+      return satisfies.map((satisfy) => {
+        if (satisfy.id === wish_id) {
+          return {
+            ...satisfy,
+            satisfied: !satisfy.satisfied,
+          };
+        } else {
+          return satisfy;
+        }
+      });
+    });
+  };
+  const pickYellowHeart = (interested) => {
+    if (interested) {
+      return "💛";
+    } else {
+      return "🤍";
+    }
+  };
+  const pickGreenHeart = (satisfied) => {
+    if (satisfied) {
+      return "💚";
+    } else {
+      return "🤍";
+    }
+  };
 
   return (
     <AuthProvider setCurrentUser={setCurrentUser}>
@@ -187,6 +278,15 @@ const MainLayout = () => {
             deleteUser,
             setSearchResults,
             searchResults,
+            handleSearchResult,
+            foundUserWish,
+            foundUser,
+            updateWish,
+            makeWishReal,
+            pickYellowHeart,
+            pickGreenHeart,
+            satisfyWish,
+            // logout
           }}
         />
       </Layout>

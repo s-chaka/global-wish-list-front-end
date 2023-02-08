@@ -106,3 +106,13 @@ header {
     font-size: 3rem;
   }
 } 
+
+.wishes-article {
+  margin: 1em;
+  padding: 0.5em;
+  background-color:black;
+  color: whitesmoke;
+  border-radius: 15px;
+  align-content:flex-start;
+}
+

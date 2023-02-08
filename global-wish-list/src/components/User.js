@@ -1,14 +1,14 @@
 import { useOutletContext, useNavigate } from "react-router-dom";
 
 const User = () => {
-  const { userData, searchResults } = useOutletContext();
+  const { userData, searchResults, handleSearchResult } = useOutletContext();
 
   // const data = Object.entries(userData);
   // console.log(data.firstName);
   const navigate = useNavigate();
-  const handleClick = () => {
-    navigate("/profile");
-  };
+  // const handleClick = () => {
+  //   navigate("/profile");
+  // };
 
   return (
     <div>
@@ -17,7 +17,7 @@ const User = () => {
           <article key={user.id}>
             <h3>
               Name: {user.firstName} {user.lastName}
-              <button onClick={handleClick}> view wish </button>
+              <button onClick={handleSearchResult}> view wish </button>
             </h3>
             <p>email: {user.email}</p>
             <p>Country: {user.address.country}</p>

@@ -1,10 +1,4 @@
-import React, { useState, useEffect } from "react";
-import {
-  useNavigate,
-  useLocation,
-  Router,
-  useOutletContext,
-} from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import "./Home.css";
 import "./SearchBar.css";
 import SearchBar from "./SearchBar";
@@ -16,7 +10,7 @@ const Home = () => {
   return (
     <>
       <SearchBar />
-      <UsersList />
+      {searchResults && <UsersList />}
     </>
   );
 };

@@ -2,8 +2,8 @@
 //   [firstLetter.toUpperCase(), ...rest].join("");
 
 export const setItemInLocalStorage = (keyName, value) => {
-  console.log("keyName:", keyName);
-  console.log("value:", value);
+  // console.log("keyName:", keyName);
+  // console.log("value:", value);
   window.localStorage.setItem(keyName, JSON.stringify(value));
 };
 export const getItemFromLocalStorage = (keyName) => {

@@ -15,13 +15,14 @@ const WishList = () => {
     axios
       .get(`${URL}/wishes`)
       .then((response) => {
-        console.log("test wish respones", response);
         const newWishes = response.data.result.map((userWish) => {
           return {
             id: userWish._id,
             wishList: userWish.wish,
             story: userWish.story,
             owner: userWish.owner_id,
+            interested: userWish.interested,
+            satisfied: userWish.satisfied,
           };
         });
         setWishData(newWishes);
@@ -32,7 +33,7 @@ const WishList = () => {
   }, []);
 
   // working
-  const [userWish, setUserWish] = "";
+  const [userWish, setUserWish] = useState("");
   const getUsersWish = (user_id) => {
     axios
       .get(`${URL}/${user_id}/wishlist`)
@@ -44,9 +45,12 @@ const WishList = () => {
             wishList: userWish.wish,
             story: userWish.story,
             owner: userWish.owner_id,
+            interested: userWish.interested,
+            satisfied: userWish.satisfied,
           };
         });
         setUserWish(user);
+        console.log(userWish);
       })
       .catch((error) => {
         console.log(error);
