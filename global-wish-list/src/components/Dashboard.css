@@ -1,0 +1,21 @@
+.dashboardProfile {
+    font-weight: bolder;
+    color: darkblue;
+    text-align:left;
+    margin: 30px;
+}
+
+.userName {
+    color:black;
+    font-size:35px;
+    font-weight:bolder;
+    text-align: center;
+}
+.address {
+    color: black;
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+
+    
+}
