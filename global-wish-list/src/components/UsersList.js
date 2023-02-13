@@ -1,10 +1,12 @@
-import Dashboard from "./Dashboard";
 import "./Home.css";
 import { useOutletContext } from "react-router-dom";
 import User from "./User";
 
 const UsersList = () => {
-  const { userData, searchResults } = useOutletContext();
+  const { searchResults } = useOutletContext();
+  if (searchResults === null) {
+    return null;
+  }
   const results = Object.values(searchResults).map((user) => (
     <User key={user.id} user={user} />
   ));

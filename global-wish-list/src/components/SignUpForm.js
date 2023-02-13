@@ -2,11 +2,12 @@ import { useState } from "react";
 import set from "lodash/set";
 import "./Form.css";
 import { useOutletContext, useNavigate } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
-  const { userData, addUser } = useOutletContext();
-  const [error, setError] = useState(false);
+  const { addUser } = useOutletContext();
   const [formFields, setFormFields] = useState({
     firstName: "",
     lastName: "",
@@ -22,14 +23,6 @@ const SignUpForm = () => {
   });
   const FormSubmit = (e) => {
     e.preventDefault();
-    // if (
-    //   formFields.firstName.length === 0 ||
-    //   formFields.lastName.length === 0 ||
-    //   formFields.email.length === 0 ||
-    //   formFields.address.country.length === 0
-    // ) {
-    //   setError(true);
-    // }
     addUser({
       first_name: formFields.firstName,
       last_name: formFields.lastName,
@@ -38,174 +31,134 @@ const SignUpForm = () => {
       address: formFields.address,
     });
     setFormFields({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
+      firstName: formFields.firstName,
+      lastName: formFields.lastName,
+      email: formFields.email,
+      password: formFields.password,
       address: {
-        country: "",
-        city: "",
-        state: "",
-        streetAddress: "",
-        zipCode: "",
+        country: formFields.address.country,
+        city: formFields.address.city,
+        state: formFields.address.state,
+        streetAddress: formFields.address.streetAddress,
+        zipCode: formFields.address.zipCode,
       },
     });
-    // alert("user deleted successfully");
-    navigate("/signin");
+    navigate("/");
   };
 
-  const alertMessage = () => {
-    alert("User created successfully please sign in!");
-  };
   const handleChange = (e) => {
     const formFieldsCopy = JSON.parse(JSON.stringify(formFields));
     set(formFieldsCopy, e.target.name, e.target.value);
     setFormFields(formFieldsCopy);
   };
   return (
-    <div className="form-container">
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <h3> Please Sign Up </h3>
-      <form onSubmit={FormSubmit} className="signup-form">
-        <div>
-          <label htmlFor="firstName">First Name: </label>
-          <input
+    <div className="form-signup">
+      <Form onSubmit={FormSubmit} className="signup-form">
+        <h3> Please Sign Up </h3>
+        <Form.Group className="mb-3" controlId="formFirstName">
+          <Form.Control
             name="firstName"
-            placeholder="your first name"
+            placeholder="First Name"
             value={formFields.firstName}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.firstName <= 0 ? (
-          <label className="error-lable">*First Name can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>
-          <label htmlFor="lastName">Last Name: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formLastName">
+          <Form.Control
             name="lastName"
-            placeholder="your last name"
+            placeholder="Last Name"
             value={formFields.lastName}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.lastName <= 0 ? (
-          <label className="error-lable">*Last Name can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>
-          <label htmlFor="email">Email: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Control
             name="email"
-            placeholder="your email"
+            placeholder="Email"
             value={formFields.email}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.email <= 0 ? (
-          <label className="error-lable"> *Email can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>
-          <label htmlFor="password">Password: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Control
             name="password"
-            placeholder="create password"
+            placeholder="Password"
             value={formFields.password}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.password <= 0 ? (
-          <label className="error-lable"> *Password can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>Address </div>
-
-        <div>
-          <label htmlFor="country">Country: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formCountryName">
+          <Form.Control
             name="address.country"
-            placeholder="yout current country"
+            placeholder="Country"
             value={formFields.address.country}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.country <= 0 ? (
-          <label className="error-lable"> *Country can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>
-          <label htmlFor="city">City: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formCityName">
+          <Form.Control
             name="address.city"
-            placeholder="yout current city"
+            placeholder="City"
             value={formFields.address.city}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.city <= 0 ? (
-          <label className="error-lable">*City can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>
-          <label htmlFor="state">State: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formStateName">
+          <Form.Control
             name="address.state"
-            placeholder="your current state"
+            placeholder="State"
             value={formFields.address.state}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.state <= 0 ? (
-          <label className="error-lable"> *State can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>
-          <label htmlFor="streetAddress">Stree address: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formStreetAddressName">
+          <Form.Control
             name="address.streetAddress"
-            placeholder="your current street-address"
+            placeholder="Stree address"
             value={formFields.address.streetAddress}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.streetAddress <= 0 ? (
-          <label className="error-lable"> *Street Address can't be empty</label>
-        ) : (
-          ""
-        )}
-        <div>
-          <label htmlFor="zipCode">Zip code: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formZipCodeName">
+          <Form.Control
             name="address.zipCode"
-            placeholder="your zip code"
+            placeholder="Zip code"
             value={formFields.address.zipCode}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        {error && formFields.zipCode <= 0 ? (
-          <label className="error-lable"> *Zip code can't be empty</label>
-        ) : (
-          ""
-        )}
+        </Form.Group>
         <div>
-          <button type="submit" onClick={alertMessage}>
+          <Button
+            variant="dark"
+            type="submit"
+            onClick={() =>
+              alert(
+                "User created successfully please sign in if you like to see you'r dashboard!"
+              )
+            }
+          >
             Sign Up{" "}
-          </button>
+          </Button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 };

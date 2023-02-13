@@ -1,17 +1,17 @@
-import { useOutletContext } from "react-router-dom";
 import "./Home.css";
 import "./SearchBar.css";
 import SearchBar from "./SearchBar";
 import UsersList from "./UsersList";
 
 const Home = () => {
-  const { searchResults, setSearchResults } = useOutletContext();
-
   return (
-    <>
+    <div>
       <SearchBar />
-      {searchResults && <UsersList />}
-    </>
+      <UsersList />
+      <div className="container">
+        <div className="bg-image"></div>
+      </div>
+    </div>
   );
 };
 

@@ -1,31 +1,33 @@
-import { useOutletContext, useNavigate } from "react-router-dom";
-
+import { useOutletContext } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 const User = () => {
-  const { userData, searchResults, handleSearchResult } = useOutletContext();
-
-  // const data = Object.entries(userData);
-  // console.log(data.firstName);
-  const navigate = useNavigate();
-  // const handleClick = () => {
-  //   navigate("/profile");
-  // };
+  const { searchResults, handleSearchResult } = useOutletContext();
 
   return (
     <div>
       {searchResults.map((user) => {
         return (
-          <article key={user.id}>
-            <h3>
-              Name: {user.firstName} {user.lastName}
-              <button onClick={handleSearchResult}> view wish </button>
-            </h3>
-            <p>email: {user.email}</p>
-            <p>Country: {user.address.country}</p>
-            <p>City: {user.address.city}</p>
-            <p>State: {user.address.state} </p>
-            <p>Street Adress: {user.address.streetAddress} </p>
-            <p>Zip Code: {user.address.zipCode} </p>
-          </article>
+          <div key={user.id}>
+            <article>
+              <h6>
+                Name: {user.firstName} {user.lastName}{" "}
+                <Button
+                  variant="outline-light"
+                  size="sm"
+                  onClick={handleSearchResult}
+                >
+                  {" "}
+                  view wish{" "}
+                </Button>
+              </h6>
+              <p>
+                email: {user.email} Country: {user.address.country} City:{" "}
+                {user.address.city} State: {user.address.state} Street Adress:{" "}
+                {user.address.streetAddress} Zip Code: {user.address.zipCode}{" "}
+              </p>
+            </article>
+          </div>
         );
       })}
     </div>

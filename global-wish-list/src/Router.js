@@ -4,16 +4,17 @@ import axios from "axios";
 import Homepage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import UnknownPage from "./pages/404";
-import Wishes from "./pages/Wishes";
 import SignInPage from "./pages/SingInPage";
 import Layout from "./components/Layout";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import { AuthProvider } from "./hooks/useAuth";
-import { getItemFromLocalStorage, setItemInLocalStorage } from "./Utils";
+import { getItemFromLocalStorage } from "./Utils";
 import HowItWorksPage from "./pages/HowItWorksPage";
 
-// const URL=https://global-wish-list.herokuapp.com/users
+// const URL = process.env.REACT_APP_BACKEND_URL;
+
+// const URL = "https://global-wish-list.herokuapp.com/users";
 const URL = "http://localhost:5000/users";
 
 const MainLayout = () => {
@@ -23,12 +24,11 @@ const MainLayout = () => {
     getItemFromLocalStorage("user")
   );
 
-  // get user working
+  //********Get all Users************//
   useEffect(() => {
     axios
       .get(URL)
       .then((response) => {
-        console.log("get user response", response);
         const newUsers = response.data.result.map((user) => {
           return {
             id: user._id,
@@ -40,31 +40,31 @@ const MainLayout = () => {
           };
         });
         setUserData(newUsers);
-        setSearchResults(newUsers);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
 
-  // add user working
+  //******** Add User************//
   const addUser = (user) => {
     axios
       .post(URL, user)
       .then((response) => {
-        // console.log(" add user test response", response);
+        console.log(response);
         const newUsers = [...userData];
         newUsers.push({
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
+          id: response.data._id,
+          firstName: user.first_name,
+          lastName: user.last_name,
+          email: user.email,
+          password: user.password,
           address: {
-            country: "",
-            city: "",
-            state: "",
-            streetAddress: "",
-            zipCode: "",
+            country: user.address.country,
+            city: user.address.city,
+            state: user.address.state,
+            streetAddress: user.address.streetAddress,
+            zipCode: user.address.zipCode,
           },
           ...user,
         });
@@ -74,31 +74,59 @@ const MainLayout = () => {
         console.log(error);
       });
   };
-
-  const navigate = useNavigate();
-  // working
-  const deleteUser = (id) => {
-    axios
-      .delete(`${URL}/${id}`)
-      .then(() => {
-        const newUsers = userData?.filter((user) => user?.id !== id);
-        setUserData(newUsers);
+  //********Update User************//
+  const updateUser = (id, formFields) => {
+    const user = axios
+      .put(`${URL}/${id}`, {
+        first_name: formFields.firstName,
+        last_name: formFields.lastName,
+        email: formFields.email,
+        password: formFields.password,
+        address: {
+          country: formFields.address.country,
+          city: formFields.address.city,
+          state: formFields.address.state,
+          streetAddress: formFields.address.streetAddress,
+          zipCode: formFields.address.zipCode,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
-    navigate("/");
+      .then((response) => {
+        console.log(response);
+        setUserData(response.data);
+      })
+      .catch((error) => console.log(error));
+
+    return user;
   };
 
-  // get all Users
+  const navigate = useNavigate();
+  //********Delete User************//
+  const deleteUser = (id) => {
+    const userResponse = window.confirm(
+      "Are you sure you want to delete you'r account?"
+    );
+    if (userResponse) {
+      axios
+        .delete(`${URL}/${id}`)
+        .then(() => {
+          const newUsers = userData?.filter((user) => user?.id !== id);
+          setUserData(newUsers);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      navigate("/");
+    }
+  };
+
+  //********Get Wishes************//
   useEffect(() => {
     axios
       .get(`${URL}/wishes`)
-      // .get(`${URL}/${user_id}/wishlist`)
       .then((response) => {
-        // console.log(" wish test respones", response);
         const newWishes = response.data.result.map((userWish) => {
           return {
+            url: userWish.url,
             wishList: userWish.wish,
             story: userWish.story,
             owner: userWish.owner_id,
@@ -114,14 +142,14 @@ const MainLayout = () => {
       });
   }, []);
 
-  // working
+  //********Add Wish************//
   const addWish = (wish, userId) => {
     axios
       .post(`${URL}/${userId}/wishlist`, wish)
       .then((response) => {
-        // console.log("test response", response);
         const newWish = [...wishData];
         newWish.push({
+          url: "",
           wishList: "",
           story: "",
         });
@@ -131,22 +159,28 @@ const MainLayout = () => {
         console.log(error);
       });
   };
-  // working
+  //********Delete Wish************//
   const deleteWish = (wishId) => {
-    axios
-      .delete(`${URL}/${wishId}/wishlist`)
-      .then(() => {
-        const newWishes = wishData.filter((wish) => wish.id !== wishId);
-        setWishData(newWishes);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const userResponse = window.confirm(
+      "Are you sure you want to delete you'r wish?"
+    );
+    if (userResponse) {
+      axios
+        .delete(`${URL}/${wishId}/wishlist`)
+        .then(() => {
+          const newWishes = wishData.filter((wish) => wish.id !== wishId);
+          setWishData(newWishes);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
-
+  //********Update Wish************//
   const updateWish = (wishId, wish) => {
     axios
       .put(`${URL}/${wishId}/wishlist`, {
+        url: wish.url,
         wish: wish.wishList,
         story: wish.story,
         interested: wish.interested,
@@ -169,9 +203,10 @@ const MainLayout = () => {
       });
   };
 
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
   const [foundUser, setFoundUser] = useState([]);
   const [foundUserWish, setFoundUserWish] = useState([]);
+
   const handleSearchResult = () => {
     const wishFound = [];
     const userFound = [];
@@ -185,11 +220,7 @@ const MainLayout = () => {
         setFoundUserWish(wishFound);
         setFoundUser(userFound);
       }
-      // if (!wishFound) {
-      //   <p>"No wish found"</p>;
-      // } else {
       navigate("/profile");
-      // }
     }
   };
 
@@ -262,7 +293,6 @@ const MainLayout = () => {
       return "🤍";
     }
   };
-
   return (
     <AuthProvider setCurrentUser={setCurrentUser}>
       <Layout currentUser={currentUser}>
@@ -286,7 +316,7 @@ const MainLayout = () => {
             pickYellowHeart,
             pickGreenHeart,
             satisfyWish,
-            // logout
+            updateUser,
           }}
         />
       </Layout>
@@ -309,10 +339,6 @@ export const routes = [
       {
         element: <SignUpPage />,
         path: "/signup",
-      },
-      {
-        element: <Wishes />,
-        path: "/wishes",
       },
       {
         element: <SignInPage />,

@@ -1,27 +1,28 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
-// import set from "lodash/set";
-const WishForm = (props) => {
-  const userData = props.userData;
-  const wishData = props.wishData;
-  console.log("currentUser from wish form", props.currentUser);
+import { Button, Form } from "react-bootstrap";
+import { useOutletContext } from "react-router-dom";
+
+const WishForm = () => {
+  const { currentUser, addWish } = useOutletContext();
 
   const [formFields, setFormFields] = useState({
+    url: "",
     wishList: "",
     story: "",
   });
 
   const FormSubmit = (e) => {
-    console.log(props.data);
     e.preventDefault();
-    props.onAddWishData(
+    addWish(
       {
+        url: formFields.url,
         wish: formFields.wishList,
         story: formFields.story,
       },
-      props.currentUser.id
+      currentUser.id
     );
     setFormFields({
+      url: "",
       wishList: "",
       story: "",
     });
@@ -31,24 +32,41 @@ const WishForm = (props) => {
     setFormFields({ ...formFields, [e.target.name]: e.target.value });
   };
   return (
-    <form onSubmit={FormSubmit}>
-      <div>
-        <br />
-        <label htmlFor="wishList">Wish: </label>
-        <input
+    <Form onSubmit={FormSubmit}>
+      <br />
+      <Form.Group className="mb-3">
+        <Form.Control
+          type="url"
+          name="url"
+          value={formFields.url}
+          onChange={handleChange}
+          placeholder="https://example.com"
+          size="sm"
+        />
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Control
           name="wishList"
           value={formFields.wishList}
+          placeholder="Wish"
           onChange={handleChange}
+          size="sm"
         />
-      </div>
-      <br />
-      <div>
-        <label htmlFor="story">Story: </label>
-        <input name="story" value={formFields.story} onChange={handleChange} />
-      </div>
-      <br />
-      <button type="submit"> Sumbit Wish </button>
-    </form>
+      </Form.Group>
+      <Form.Group className="mb-3">
+        <Form.Control
+          name="story"
+          value={formFields.story}
+          placeholder="Story"
+          onChange={handleChange}
+          size="sm"
+        />
+      </Form.Group>
+      <Button variant="success" size="sm" type="submit">
+        {" "}
+        Sumbit Wish{" "}
+      </Button>
+    </Form>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import { useEffect, createContext, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
 
@@ -10,7 +10,6 @@ export const AuthProvider = ({ children, setCurrentUser, currentUser }) => {
 
   useEffect(() => {
     const lsUser = getItemFromLocalStorage("user");
-    // console.log(lsUser);
     if (lsUser && !currentUser) {
       setCurrentUser(lsUser);
       navigate(location.pathname);

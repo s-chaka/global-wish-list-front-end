@@ -1,35 +1,53 @@
 import "./NavBar.css";
-import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const NavBar = ({ currentUser }) => {
-  const { logout, login, handleUser, deleteUser } = useAuth();
+  const { logout, handleUser } = useAuth();
   return (
-    <div className="navbar">
-      <Link to="/" className="link">
-        Home{" "}
-      </Link>
-      <Link to="/howitworks" className="link">
-        How It Works{" "}
-      </Link>
-      <Link to="/wishes" className="link">
-        Wish List{" "}
-      </Link>
-      {!currentUser && (
-        <Link to="/signin" className="link" onClick={logout}>
-          Sign In/ Sign Up{" "}
-        </Link>
-      )}
-      {currentUser && (
-        <Link to="/dashboard" className="link" onClick={handleUser}>
-          {currentUser.firstName}'s Dashoard{" "}
-        </Link>
-      )}
-      {currentUser && (
-        <Link to="/" className="link" onClick={logout}>
-          Sign Out{" "}
-        </Link>
-      )}
+    <div>
+      <Navbar bg="dark" variant="dark">
+        <Container>
+          <Navbar.Brand href="/" className="nav-color">
+            GWL
+          </Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/" className="nav-color">
+              Home
+            </Nav.Link>
+            <Nav.Link as={Link} to="/howitworks" className="nav-color">
+              How It Works
+            </Nav.Link>
+            {!currentUser && (
+              <Nav.Link
+                as={Link}
+                to="/signin"
+                className="nav-color"
+                onClick={logout}
+              >
+                Sign In/ Sign Up
+              </Nav.Link>
+            )}
+            {currentUser && (
+              <Nav.Link
+                as={Link}
+                to="/dashboard"
+                className="nav-color"
+                onClick={handleUser}
+              >
+                {currentUser.firstName}'s Dashoard
+              </Nav.Link>
+            )}
+            {currentUser && (
+              <Nav.Link as={Link} to="/" className="nav-color" onClick={logout}>
+                Sign Out
+              </Nav.Link>
+            )}
+          </Nav>
+        </Container>
+      </Navbar>
     </div>
   );
 };

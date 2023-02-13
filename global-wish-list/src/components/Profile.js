@@ -1,67 +1,79 @@
-import React, { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import { Button, Card, Col, Row } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Profile = () => {
   const {
     updateWish,
     foundUserWish,
     foundUser,
-    wishData,
     makeWishReal,
     pickYellowHeart,
     pickGreenHeart,
   } = useOutletContext();
 
-  const alertMessage = () => {
-    alert("If you'r intrested please conatct the wish owner!");
-  };
-
   return (
-    <div>
+    <div className="container">
+      <Card
+        className="container"
+        style={{ color: "#000", width: "50rem", hight: "5rem" }}
+      >
+        <article className="profile-article">
+          {foundUser.map((user, id) => {
+            return (
+              <div key={id}>
+                <h4> You're viewing {user.firstName}'s Wish List </h4>
+                <p>
+                  Full Name: {user.firstName} {user.lastName}
+                </p>
+                <p>email: {user.email}</p>
+                <p>
+                  Country: {user.address.country} City: {user.address.city}
+                </p>
+                <p>
+                  State: {user.address.state} Zip Code: {user.address.zipCode}
+                </p>
+              </div>
+            );
+          })}
+        </article>
+      </Card>
+      <br />
+      <br />
       <div className="wishes-article">
-        {foundUser.map((user, id) => {
-          return (
-            <div key={id}>
-              <p> You're viewing {user.firstName}'s Wish List </p>
-              <ul>
-                <li>First Name: {user.firstName}</li>
-                <li>Last Name: {user.lastName}</li>
-                <li>email: {user.email}</li>
-                <li>Country: {user.address.country}</li>
-                <li>City: {user.address.city}</li>
-                <li>State: {user.address.state}</li>
-                <li>Zip Code: {user.address.zipCode}</li>
-              </ul>
-            </div>
-          );
-        })}
-      </div>
-      <div className="wishes-article">
-        <p>Wish List </p>
-        {foundUserWish.map((wish, id) => {
-          return (
-            <ul key={id}>
-              <li>
-                Wish: {wish.wishList}
-                {pickGreenHeart(wish.satisfied)}
-                <button
-                  onClick={() => {
-                    makeWishReal(wish.id);
-                    updateWish(wish.id, {
-                      ...wish,
-                      interested: !wish.interested,
-                    });
-                    alertMessage();
-                  }}
-                >
-                  Interested
-                </button>
-                {pickYellowHeart(wish.interested)}
-              </li>
-              <li>Story: {wish.story}</li>
-            </ul>
-          );
-        })}
+        <Row xs={1} md={3} className="g-4">
+          {foundUserWish.map((wish, id) => {
+            return (
+              <Col key={id}>
+                <Card bg="light" border="dark">
+                  <Card.Header>Wish Card </Card.Header>
+                  <Card.Body>
+                    <Card.Text> Wish: {wish.wishList}</Card.Text>{" "}
+                    <Card.Text> Story: {wish.story} </Card.Text>
+                    {pickGreenHeart(wish.satisfied)}{" "}
+                    <Button
+                      variant="warning"
+                      size="sm"
+                      onClick={() => {
+                        makeWishReal(wish.id);
+                        updateWish(wish.id, {
+                          ...wish,
+                          interested: !wish.interested,
+                        });
+                        window.confirm(
+                          "Are you sure you want to share your interest with the wish's owner? If you're please contact the wish owner"
+                        );
+                      }}
+                    >
+                      Interested
+                    </Button>{" "}
+                    {pickYellowHeart(wish.interested)}{" "}
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
       </div>
     </div>
   );

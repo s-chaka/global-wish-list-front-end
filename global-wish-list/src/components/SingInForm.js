@@ -1,11 +1,10 @@
-import { useNavigate, useLocation, Router } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import { useState, useContex } from "react";
-import PropTypes from "prop-types";
-import WishForm from "./WishForm";
-// import { setItemInLocalStorge } from "../Utils";
-import { useAuth } from "../hooks/useAuth";
-import { useOutletContext } from "react-router-dom";
-import { getItemFromLocalStorage, setItemInLocalStorage } from "../Utils";
+import "./Form.css";
+import { setItemInLocalStorage } from "../Utils";
+import { Button, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+// import PasswordMask from "react-password-mask";
 
 const SignInForm = (props) => {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ const SignInForm = (props) => {
     email: "",
     password: "",
   });
-  // const { login, user } = useAuth();
+
   const handleUser = (e) => {
     let user_found = false;
     for (let user of userData) {
@@ -25,10 +24,10 @@ const SignInForm = (props) => {
         user_found = true;
         setCurrentUser(user);
         setItemInLocalStorage("user", user);
+
         navigate("/dashboard");
         break;
       }
-      // login();
     }
     if (!user_found) {
       navigate("/signup");
@@ -47,32 +46,38 @@ const SignInForm = (props) => {
     setFormFields({ ...formFields, [e.target.name]: e.target.value });
   };
   return (
-    <div className="form-container">
-      <h3> Please Log In </h3>
-      <form onSubmit={FormSubmit} className="singin-from">
-        <div>
-          <label htmlFor="email">Email: </label>
-          <input
+    <div className="form-singin">
+      <Form onSubmit={FormSubmit}>
+        <h3> Please Log In </h3>
+        <Form.Group className="mb-3" controlId="signin-form">
+          <Form.Label>Email address </Form.Label>
+          <Form.Control
             name="email"
-            placeholder="your email"
+            placeholder="Email address"
             value={formFields.email}
             onChange={handleChange}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password: </label>
-          <input
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="signin-form">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             name="password"
-            placeholder="*******"
+            placeholder="Password"
             value={formFields.password}
             onChange={handleChange}
+            // useVendorStyles={false}
+            className=" w-50"
+            size="sm"
           />
-        </div>
-        <button type="submit" onClick={handleUser}>
+        </Form.Group>
+        <br />
+        <Button variant="dark" type="submit" onClick={handleUser}>
           {" "}
           Sign In/Sign Up{" "}
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   );
 };

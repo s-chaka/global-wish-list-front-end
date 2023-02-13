@@ -8,10 +8,7 @@
     margin-left: auto;
     margin-right: auto;
     position: relative;
-    /* align-items: center; */
     align-content: center;
-    /* display: flex; */
-    /* flex-direction: row; */
 }
 
 
@@ -37,15 +34,12 @@
 
 .dropdown {
     background-color: white;
-    /* display: flex; */
-    /* flex-direction: column; */
     border: 1px solid gray;
     align-items: center;
 }
 .search-container {
 width: 100px;
-/* display: flex; */
-/* flex-direction: column; */
+
 }
 
 .search-inner {
@@ -58,26 +52,14 @@ width: 100px;
     margin: 2px 0;
 }
 
-.search-item{
-    /* text-decoration: underline; */
-    /* text-rendering: auto; */
-}
 
 
 .search-result {
-    /* border: 1px solid black; */
-    /* justify-content: center; */
     text-align: center;
     font-size: 30px;
-    /* background-color:black; */
     text-align: center;
     padding: 20px 0;
     font-size: 30px;
-    /* overflow-y:scroll; */
-    /* color:white; */
-    /* box-shadow: 5px 5px 7px rgba(33,33,33,.7); */
-    /* transform: rotate(-1deg);  */
-    /* width: 30rem; */
     align-items: center;
 }
  
@@ -94,4 +76,33 @@ article {
 .error-lable {
 color:red;
 font-size: smaller;
+}
+
+.bg-image {
+    background-position: center;
+    background-image: url(../Image/world-map-earth-multicultural-group-people.png);
+    width:55rem;
+    height: 30rem;
+    background-size: cover;
+    margin-right: 0.5rem;
+    align-self: center;
+    justify-content: center;
+}
+
+.hoempage-p {
+color:black;
+font-size:larger;
+font-family:Georgia, 'Times New Roman', Times, serif;
+text-align: center;
+padding: 0.3rem;
+}
+
+h6 {
+    text-align: center;
+    color: orange;
+}
+
+span {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:20px;
 }

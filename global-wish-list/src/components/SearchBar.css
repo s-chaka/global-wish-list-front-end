@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
 
 input,
@@ -15,14 +16,8 @@ html {
   font-size: 1.5rem;
 }
 
-body {
-  background-color:antiquewhite;
-  font-family: 'Nunito', sans-serif;
-  color:black;
-}
 
 p {
-  color: whitesmoke;
   margin-top: 0.5em;
   font-size:20px;
   font-style: italic;
@@ -43,7 +38,7 @@ img {
 }
 
 header {
-  background-color:orange;
+  background-color:rgb(241, 171, 40);
   padding: 1em;
   display: flex;
   justify-content: center;
@@ -72,7 +67,7 @@ header {
 }
 
 .search__input {
-  padding: 1em;
+  padding: 0.5em;
   width: 85%;
 }
 
@@ -107,12 +102,21 @@ header {
   }
 } 
 
-.wishes-article {
+.profile-article {
   margin: 1em;
   padding: 0.5em;
-  background-color:black;
-  color: whitesmoke;
+  background-color:rgb(253, 189, 69);
+  color: black;
   border-radius: 15px;
+  font-weight: bolder;
   align-content:flex-start;
 }
 
+ul {
+  list-style-type: none;
+}
+
+.li-p {
+  font-weight: bold;
+  align-items:baseline;
+}
