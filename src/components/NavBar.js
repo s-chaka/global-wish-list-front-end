@@ -8,7 +8,7 @@ const NavBar = ({ currentUser }) => {
   const { logout, handleUser } = useAuth();
   return (
     <div>
-      <Navbar bg="dark" variant="dark">
+      <Navbar variant="dark" className="nav-background ">
         <Container>
           <Navbar.Brand href="/" className="nav-color">
             GWL

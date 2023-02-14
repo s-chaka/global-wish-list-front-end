@@ -38,8 +38,8 @@ img {
 }
 
 header {
-  background-color:rgb(241, 171, 40);
-  padding: 1em;
+  background-color:orange;
+  padding: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,7 +111,15 @@ header {
   font-weight: bolder;
   align-content:flex-start;
 }
-
+.HowPage-article {
+  margin: 5rem;
+  padding: 0.5em;
+  background-color:rgb(253, 189, 69);
+  color: black;
+  border-radius: 15px;
+  font-weight: bolder;
+  align-content:flex-start;
+}
 ul {
   list-style-type: none;
 }

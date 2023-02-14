@@ -14,8 +14,8 @@ import HowItWorksPage from "./pages/HowItWorksPage";
 
 // const URL = process.env.REACT_APP_BACKEND_URL;
 
-// const URL = "https://global-wish-list.herokuapp.com/users";
-const URL = "http://localhost:5000/users";
+const URL = "https://global-wish-list.herokuapp.com/users";
+// const URL = "http://localhost:5000/users";
 
 const MainLayout = () => {
   const [userData, setUserData] = useState([]);

@@ -4,7 +4,7 @@ import "./Home.css";
 const HowItWorks = () => {
   return (
     <div className="container">
-      <article className="profile-article">
+      <article className="HowPage-article">
         <h4> How Global-Wish-List web app works ? </h4>
         <br />
         <p>

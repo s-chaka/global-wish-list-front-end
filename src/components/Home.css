@@ -94,7 +94,8 @@ color:black;
 font-size:larger;
 font-family:Georgia, 'Times New Roman', Times, serif;
 text-align: center;
-padding: 0.3rem;
+padding: 0.2rem;
+margin-bottom: 0;
 }
 
 h6 {
