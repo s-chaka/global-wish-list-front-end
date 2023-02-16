@@ -48,6 +48,7 @@ const Profile = () => {
                 <Card bg="light" border="dark">
                   <Card.Header>Wish Card </Card.Header>
                   <Card.Body>
+                    <Card.Text> Url: {wish.url}</Card.Text>
                     <Card.Text> Wish: {wish.wishList}</Card.Text>{" "}
                     <Card.Text> Story: {wish.story} </Card.Text>
                     {pickGreenHeart(wish.satisfied)}{" "}
