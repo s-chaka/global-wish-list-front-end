@@ -3,7 +3,7 @@ import "./Dashboard.css";
 import { useOutletContext } from "react-router-dom";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import WishForm from "../components/WishForm";
+import WishForm from "./WishForm";
 import UpdateForm from "./UpdateForm";
 
 const Dashboard = () => {

@@ -4,11 +4,11 @@ const Homepage = () => {
   return (
     <div>
       <p className="hoempage-p">
-        <br /> ✨✨✨✨ Search for someone random and make them smile ✨✨✨✨
+        <br /> ✨✨✨✨ Spread joy to someone new today ✨✨✨✨
         <br />
         <span>
           {" "}
-          You can search by first name, last name, country, state or city
+          You can search by first name, last name, country, state or city to make a difference.
         </span>
       </p>
       <Home />

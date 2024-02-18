@@ -5,25 +5,27 @@ const HowItWorks = () => {
   return (
     <div className="container">
       <article className="HowPage-article">
-        <h4> How Global-Wish-List web app works ? </h4>
+        <h4> How Global-Wish-List Works </h4>
         <br />
         <p>
-          Global Wish List web app links all people on the planet. GWL is the
-          ideal online app for you if you have the ability to brighten someone's
-          day.
+        Global Wish List connects people worldwide, fostering kindness and community. 
+        Our platform is perfect for those eager to make a difference in someone's life.
         </p>
         <p>
-          To view someone's wishes, you can search for them by name, nation,
-          state, or city, or you can choose a random individual.
+        To explore wishes, simply search by name, country, state, or city, 
+        or opt for a random selection.
         </p>
         <p>
-          By clicking the "interested" button, you can let the wish owner know
-          that you're interested in granting their desire. The heart will then
-          turn yellow ("💛"), and you can get in touch with them using the user
-          information you've been given.
+        Express interest in fulfilling a wish by clicking the "Interested" button. 
+        The heart will turn yellow ("💛"), signaling your desire to help. Use the provided user 
+        information to reach out and make their dream a reality.
         </p>
         <p>
-          If the heart is green ( "💚"), their wish has already been granted.
+        A green heart ("💚") indicates that the wish has already been granted, 
+        spreading joy throughout the community.
+        </p>
+        <p>
+        Join us in spreading happiness, one wish at a time.
         </p>
       </article>
     </div>
