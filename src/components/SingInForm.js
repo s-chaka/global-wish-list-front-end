@@ -13,8 +13,11 @@ const SignInForm = (props) => {
     email: "",
     password: "",
   });
+  const [errorMessage, steErrorMessage] = useState("");
+
 
   const handleUser = (e) => {
+    e.preventDefault();
     let user_found = false;
     for (let user of userData) {
       if (
@@ -26,30 +29,26 @@ const SignInForm = (props) => {
         setItemInLocalStorage("user", user);
 
         navigate("/dashboard");
-        break;
+        return;
       }
     }
     if (!user_found) {
-      navigate("/signup");
+      steErrorMessage(" * User not found. Please sign up");
     }
   };
-
-  const FormSubmit = (e) => {
-    e.preventDefault();
-    handleUser({
-      email: formFields.email,
-      password: formFields.password,
-    });
-  };
-
   const handleChange = (e) => {
     setFormFields({ ...formFields, [e.target.name]: e.target.value });
   };
+
+  const handleSignUp = () =>{
+    navigate("/signup");
+  };
+
   return (
     <div className="form-singin">
-      <Form onSubmit={FormSubmit}>
+      <Form onSubmit={handleUser }>
         <h3> Please Log In </h3>
-        <Form.Group className="mb-3" controlId="signin-form">
+        <Form.Group className="mb-3" controlId="email">
           <Form.Label>Email address </Form.Label>
           <Form.Control
             name="email"
@@ -60,7 +59,7 @@ const SignInForm = (props) => {
             size="sm"
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="signin-form">
+        <Form.Group className="mb-3" controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control
             name="password"
@@ -68,16 +67,22 @@ const SignInForm = (props) => {
             placeholder="Password"
             value={formFields.password}
             onChange={handleChange}
-            // useVendorStyles={false}
             className=" w-50"
             size="sm"
           />
         </Form.Group>
+        {errorMessage && <p className="errorMessge">{errorMessage}</p>}
         <br />
-        <Button variant="dark" type="submit" onClick={handleUser}>
+        <div className="button-container">
+        <Button variant="dark" type="submit">
           {" "}
-          Sign In/Sign Up{" "}
+          Sign In{" "}
+        </Button> 
+        <Button variant="dark" onClick={handleSignUp}>
+          {" "}
+          Sign Up{" "}
         </Button>
+        </div>
       </Form>
     </div>
   );

@@ -51,6 +51,12 @@ const SignUpForm = () => {
     set(formFieldsCopy, e.target.name, e.target.value);
     setFormFields(formFieldsCopy);
   };
+
+  const handleSignIn = () =>{
+    alert("User created successfully. Please sign in.");
+    navigate("/signin");
+  };
+
   return (
     <div className="form-signup">
       <Form onSubmit={FormSubmit} className="signup-form">
@@ -149,13 +155,10 @@ const SignUpForm = () => {
           <Button
             variant="dark"
             type="submit"
-            onClick={() =>
-              alert(
-                "User created successfully please sign in if you like to see you'r dashboard!"
-              )
-            }
+            onClick={handleSignIn}
           >
             Sign Up{" "}
+
           </Button>
         </div>
       </Form>
