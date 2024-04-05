@@ -43,7 +43,7 @@ const SignUpForm = () => {
         zipCode: formFields.address.zipCode,
       },
     });
-    navigate("/");
+    navigate("/signin");
   };
 
   const handleChange = (e) => {
@@ -155,7 +155,7 @@ const SignUpForm = () => {
           <Button
             variant="dark"
             type="submit"
-            onClick={handleSignIn}
+            onClick={FormSubmit}
           >
             Sign Up{" "}
 
