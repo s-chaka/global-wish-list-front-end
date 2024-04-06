@@ -12,9 +12,7 @@ import { AuthProvider } from "./hooks/useAuth";
 import { getItemFromLocalStorage } from "./Utils";
 import HowItWorksPage from "./pages/HowItWorksPage";
 
-// const URL = process.env.REACT_APP_BACKEND_URL;
-
-const URL = "https://global-wish-list-backend-0043d84feca6.herokuapp.com/users";
+const URL = process.env.REACT_APP_BACKEND_URL;
 
 const MainLayout = () => {
   const [userData, setUserData] = useState([]);

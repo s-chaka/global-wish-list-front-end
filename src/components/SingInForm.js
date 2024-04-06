@@ -1,5 +1,5 @@
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { useState, useContex } from "react";
+import { useState } from "react";
 import "./Form.css";
 import { setItemInLocalStorage } from "../Utils";
 import { Button, Form } from "react-bootstrap";
@@ -51,6 +51,7 @@ const SignInForm = (props) => {
           <Form.Label>Email address </Form.Label>
           <Form.Control
             name="email"
+            autoComplete="email"
             placeholder="Email address"
             value={formFields.email}
             onChange={handleChange}
@@ -63,6 +64,7 @@ const SignInForm = (props) => {
           <Form.Control
             name="password"
             type="password"
+            autoComplete="new-password"
             placeholder="Password"
             value={formFields.password}
             onChange={handleChange}
