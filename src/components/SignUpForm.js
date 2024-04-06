@@ -21,40 +21,40 @@ const SignUpForm = () => {
       zipCode: "",
     },
   });
-  const FormSubmit = (e) => {
+  const FormSubmit = async (e) => {
     e.preventDefault();
-    addUser({
-      first_name: formFields.firstName,
-      last_name: formFields.lastName,
-      email: formFields.email,
-      password: formFields.password,
-      address: formFields.address,
+    try {
+      await addUser({
+        first_name: formFields.firstName,
+        last_name: formFields.lastName,
+        email: formFields.email,
+        password: formFields.password,
+        address: formFields.address,
     });
     setFormFields({
-      firstName: formFields.firstName,
-      lastName: formFields.lastName,
-      email: formFields.email,
-      password: formFields.password,
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
       address: {
-        country: formFields.address.country,
-        city: formFields.address.city,
-        state: formFields.address.state,
-        streetAddress: formFields.address.streetAddress,
-        zipCode: formFields.address.zipCode,
+        country: "",
+        city: "",
+        state: "",
+        streetAddress: "",
+        zipCode: "",
       },
     });
+    alert("User created successfully. Please sign in.");
     navigate("/signin");
+  } catch (error) {
+    console.error("Error creating user:", error);
+  }
   };
 
   const handleChange = (e) => {
     const formFieldsCopy = JSON.parse(JSON.stringify(formFields));
     set(formFieldsCopy, e.target.name, e.target.value);
     setFormFields(formFieldsCopy);
-  };
-
-  const handleSignIn = () =>{
-    alert("User created successfully. Please sign in.");
-    navigate("/signin");
   };
 
   return (

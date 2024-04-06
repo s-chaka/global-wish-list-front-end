@@ -27,7 +27,6 @@ const SignInForm = (props) => {
         user_found = true;
         setCurrentUser(user);
         setItemInLocalStorage("user", user);
-
         navigate("/dashboard");
         return;
       }
