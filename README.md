@@ -20,6 +20,10 @@ Installation/Environment Set-Up
 - Clone this repository.
 - Install dependencies by running npm install.
 
+* Test Credentials
+  - user name/email: test@test.com
+  - password: 123456
+
 
 
 
