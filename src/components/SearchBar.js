@@ -10,17 +10,34 @@ const SearchBar = () => {
   const handleSubmit = (e) => e.preventDefault();
 
   const handleSearchChange = (e) => {
-    if (!e.target.value) return setSearchResults(null);
+    const searchTerm = e.target.value.toLowerCase().trim();
+    
+    if (!searchTerm) return setSearchResults(null);
 
-    const resultsArray = userData.filter(
-      (data) =>
-        data.firstName.toLowerCase().includes(e.target.value) ||
-        data.lastName.toLowerCase().includes(e.target.value) ||
-        data.email.toLowerCase().includes(e.target.value) ||
-        data.address.country.toLowerCase().includes(e.target.value) ||
-        data.address.city.toLowerCase().includes(e.target.value) ||
-        data.address.state.toLowerCase().includes(e.target.value) ||
-        data.address.zipCode.toLowerCase().includes(e.target.value)
+    const resultsArray = userData.filter((data) => {
+      const fullName = `${data.firstName} ${data.lastName}`.toLowerCase();
+      const email = data.email.toLowerCase();
+      const country = data.address.country.toLowerCase();
+      const city = data.address.city.toLowerCase();
+      const state = data.address.state.toLowerCase();
+      const zipCode= data.address.zipCode.toLowerCase();
+
+      const countryMappings = {
+        usa: "united states",
+        uk: "united kingdom"
+      };
+
+      const mappedCountry = countryMappings[searchTerm] || searchTerm;
+
+      return (
+        fullName.includes(searchTerm) ||
+        email.includes(searchTerm) ||
+        country.includes(mappedCountry) ||
+        city.includes(searchTerm) ||
+        state.includes(searchTerm) ||
+        zipCode.includes(searchTerm)
+      );
+    }
     );
 
     setSearchResults(resultsArray);
