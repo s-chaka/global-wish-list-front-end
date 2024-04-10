@@ -69,6 +69,7 @@ const MainLayout = () => {
       })
       .catch((error) => {
         console.log(error);
+        alert("Error creating user: " + error.response.data.error)
       });
   };
   //********Update User************//

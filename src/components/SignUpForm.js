@@ -44,7 +44,6 @@ const SignUpForm = () => {
         zipCode: "",
       },
     });
-    alert("User created successfully. Please sign in.");
     navigate("/signin");
   } catch (error) {
     console.error("Error creating user:", error);
