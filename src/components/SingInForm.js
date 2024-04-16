@@ -32,7 +32,7 @@ const SignInForm = (props) => {
       }
     }
     if (!user_found) {
-      steErrorMessage(" * User not found. Please sign up");
+      steErrorMessage(" * Invalid email or password. Please try again or signup");
     }
   };
   const handleChange = (e) => {

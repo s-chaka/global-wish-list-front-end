@@ -21,7 +21,7 @@ Installation/Environment Set-Up
 - Install dependencies by running npm install.
 
 * Test Credentials
-  - user name/email: test@test.com
+  - user name/email: testme@gmail.com
   - password: 123456
 
 
